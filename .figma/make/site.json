@@ -1,0 +1,10 @@
+{
+  "description": "Experience an interactive digital portfolio for Drakion Tech, allowing users to explore services and innovations in a visually engaging and immersive way.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}
