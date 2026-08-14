@@ -1,0 +1,49 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400&display=swap');
+@import 'tailwindcss';
+
+* {
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  background: #071947;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+*::-webkit-scrollbar { width: 4px; height: 4px; }
+*::-webkit-scrollbar-track { background: transparent; }
+*::-webkit-scrollbar-thumb { background: rgba(255,0,79,0.35); border-radius: 2px; }
+* { scrollbar-width: thin; scrollbar-color: rgba(255,0,79,0.35) transparent; }
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(22px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(36px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+@keyframes floatY {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-14px); }
+}
+@keyframes eyeGlow {
+  0%, 100% { filter: drop-shadow(0 0 5px rgba(255,120,0,0.7)); }
+  50% { filter: drop-shadow(0 0 14px rgba(255,150,0,1)) drop-shadow(0 0 28px rgba(255,100,0,0.4)); }
+}
+@keyframes panelIn {
+  from { opacity: 0; transform: translateX(48px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.anim-fade-up { animation: fadeInUp 0.55s ease forwards; }
+.anim-float { animation: floatY 5.5s ease-in-out infinite; }
+.anim-eye { animation: eyeGlow 3s ease-in-out infinite; }
+.anim-panel { animation: panelIn 0.42s cubic-bezier(0.22,1,0.36,1) forwards; }
