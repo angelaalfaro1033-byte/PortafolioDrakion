@@ -561,32 +561,41 @@ function LineasNegocio() {
     {
       title: 'Desarrollo de software ágil y personalizado',
       items: ['Aplicaciones web y móviles.', 'Integraciones tecnológicas adaptadas a cada entorno operativo.'],
-      icon: <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"><polyline points="16 18 22 12 16 6" /><polyline points="8 6 2 12 8 18" /></svg>,
+      image: new URL('./imports/Desarrollode softwareAgil.png', import.meta.url).href,
       accent: C.blue,
     },
     {
       title: 'Staff Augmentation',
       items: ['Provisión de talento para proyectos puntuales.', 'Escalabilidad de equipos según las necesidades del proyecto.'],
-      icon: <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /></svg>,
+      image: new URL('./imports/Staff.png', import.meta.url).href,
       accent: C.blue,
     },
     {
       title: 'Soluciones Low-Cost',
       items: ['Servicios accesibles para PYMES y startups.', 'Desarrollo optimizado para una inversión inicial controlada.'],
-      icon: <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"><line x1="12" y1="1" x2="12" y2="23" /><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" /></svg>,
+      image: new URL('./imports/Low-cost.png', import.meta.url).href,
       accent: C.pink,
     },
     {
       title: 'Inteligencia Artificial y Ciencia de Datos',
       items: ['Modelos predictivos y analíticos.', 'Automatización de procesos.'],
-      icon: <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" /></svg>,
+      image: new URL('./imports/CienciadeDatos.png', import.meta.url).href,
       accent: C.blue,
     },
     {
       title: 'Asesoría en Apropiación Digital',
       items: ['Capacitación en nuevas tecnologías.', 'Acompañamiento para la adopción de herramientas digitales.'],
-      icon: <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"><circle cx="12" cy="12" r="10" /><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" /><line x1="12" y1="17" x2="12.01" y2="17" strokeWidth="2" /></svg>,
+      image: new URL('./imports/asesoria.png', import.meta.url).href,
       accent: C.pink,
+    },
+    {
+      title: 'Soporte gestionado 24/7 y alta confiabilidad',
+      items: [
+        'Monitoreo y soporte continuo para garantizar la operación de los servicios.',
+        'Atención 24/7 orientada a la continuidad, disponibilidad y confiabilidad tecnológica.',
+      ],
+      image: new URL('./imports/soporte.png', import.meta.url).href,
+      accent: C.blue,
     },
   ]
   return (
@@ -597,15 +606,15 @@ function LineasNegocio() {
       <p style={{ fontSize: '13px', color: C.lavender, opacity: 0.5, marginBottom: '36px' }}>
         Selecciona una línea para ver sus detalles
       </p>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '14px' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))', gap: '14px' }}>
         {lines.map((line, i) => {
           const open = active === i
           const isPink = line.accent === C.pink
           return (
             <div key={i} onClick={() => setActive(open ? null : i)}
-              style={{ background: open ? (isPink ? C.pinkGlass : C.blueGlass) : 'rgba(255,255,255,0.04)', border: `1px solid ${open ? (isPink ? C.pinkBorder : C.blueBorder) : C.border}`, borderRadius: '16px', padding: '26px', cursor: 'pointer', transition: 'all 0.28s', transform: open ? 'scale(1.02)' : 'none', boxShadow: open ? `0 14px 40px ${isPink ? 'rgba(255,0,79,0.16)' : 'rgba(42,62,244,0.16)'}` : 'none', gridColumn: i === 4 ? '3 / 4' : 'auto' }}>
-              <div style={{ color: open ? line.accent : C.lavender, opacity: open ? 1 : 0.58, transition: 'all 0.28s', marginBottom: '16px' }}>
-                {line.icon}
+              style={{ background: open ? (isPink ? C.pinkGlass : C.blueGlass) : 'rgba(255,255,255,0.04)', border: `1px solid ${open ? (isPink ? C.pinkBorder : C.blueBorder) : C.border}`, borderRadius: '16px', padding: '26px', cursor: 'pointer', transition: 'all 0.28s', transform: open ? 'scale(1.02)' : 'none', boxShadow: open ? `0 14px 40px ${isPink ? 'rgba(255,0,79,0.16)' : 'rgba(42,62,244,0.16)'}` : 'none' }}>
+              <div style={{ marginBottom: '16px' }}>
+                <img src={line.image} alt={line.title} style={{ width: '120px', height: '120px', objectFit: 'contain', display: 'block' }} />
               </div>
               <div style={{ fontWeight: 700, fontSize: '14px', color: C.white, lineHeight: 1.35, marginBottom: open ? '14px' : '0' }}>
                 {line.title}
