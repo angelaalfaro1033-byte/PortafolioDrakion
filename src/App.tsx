@@ -227,7 +227,7 @@ const MENU: Array<{ id: SectionId; title: string; sub: string; accent: 'blue' | 
   { id: 'quienes', title: '¿Quiénes somos?', sub: 'Identidad corporativa', accent: 'blue' },
   { id: 'como', title: '¿Cómo lo hacemos?', sub: 'Metodología y enfoque', accent: 'blue' },
   { id: 'modelo', title: 'Modelo de servicio', sub: 'Tres pilares estratégicos', accent: 'blue' },
-  { id: 'lineas', title: 'Líneas de negocio', sub: '5 líneas de servicio', accent: 'pink' },
+  { id: 'lineas', title: 'Líneas de negocio', sub: '6 líneas de servicio', accent: 'pink' },
   { id: 'experiencia', title: 'Experiencia y alianzas', sub: 'Industrias e impacto', accent: 'blue' },
   { id: 'clientes', title: 'Clientes y alianzas', sub: '14 clientes · 2 alianzas', accent: 'blue' },
   { id: 'gestion', title: 'Gestión de proyectos', sub: 'Capacidades y ciclo', accent: 'blue' },
