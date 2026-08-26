@@ -16,7 +16,10 @@ const C = {
   pink: '#FF004F',
   pinkGlass: 'rgba(255,0,79,0.1)',
   pinkBorder: 'rgba(255,0,79,0.28)',
-  lavender: '#E4E5F2',
+  // Text palette: high contrast on the navy background, with clear hierarchy.
+  secondary: '#D1D5DB',
+  tertiary: '#A1A1AA',
+  lavender: '#D1D5DB',
   white: '#ffffff',
   border: 'rgba(255,255,255,0.1)',
 }
@@ -71,7 +74,7 @@ function LanguageSelector() {
         <React.Fragment key={option}>
           {index > 0 && <span aria-hidden="true" style={{ width: '1px', height: '17px', background: 'rgba(228,229,242,0.2)', margin: '0 2px' }} />}
           <button type="button" onClick={() => setLanguage(option)} aria-pressed={language === option}
-            style={{ border: 'none', borderRadius: '6px', padding: '6px 9px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '5px', fontSize: '11px', fontWeight: 700, letterSpacing: '0.08em', color: language === option ? C.navy : C.lavender, background: language === option ? C.pink : 'transparent', transition: 'all 0.2s' }}>
+            style={{ border: 'none', borderRadius: '6px', padding: '6px 9px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '5px', fontSize: '13px', fontWeight: 700, letterSpacing: '0.08em', color: C.white, background: language === option ? C.pink : 'transparent', transition: 'all 0.2s' }}>
             <span aria-hidden="true" style={{ fontSize: '14px', lineHeight: 1 }}>{flags[option]}</span>
             <span>{t(`language.${option}`)}</span>
           </button>
@@ -146,7 +149,7 @@ function BackBtn({ onClick }: { onClick: () => void }) {
   const [h, setH] = useState(false)
   return (
     <button onClick={onClick} onMouseEnter={() => setH(true)} onMouseLeave={() => setH(false)}
-      style={{ display: 'flex', alignItems: 'center', gap: '7px', background: h ? C.pinkGlass : 'rgba(255,255,255,0.06)', border: `1px solid ${h ? C.pinkBorder : C.border}`, borderRadius: '8px', color: h ? C.white : C.lavender, fontWeight: 500, fontSize: '13px', padding: '8px 16px', cursor: 'pointer', transition: 'all 0.2s' }}>
+      style={{ display: 'flex', alignItems: 'center', gap: '7px', background: h ? C.pinkGlass : 'rgba(255,255,255,0.06)', border: `1px solid ${h ? C.pinkBorder : C.border}`, borderRadius: '8px', color: h ? C.white : C.lavender, fontWeight: 500, fontSize: '14px', padding: '8px 16px', cursor: 'pointer', transition: 'all 0.2s' }}>
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
         <path d="M19 12H5M12 5l-7 7 7 7" />
       </svg>
@@ -162,7 +165,7 @@ function SectionBar({ id, onBack }: { id: SectionId; onBack: () => void }) {
     <div style={{ position: 'sticky', top: 0, zIndex: 20, background: 'rgba(7,25,71,0.94)', backdropFilter: 'blur(14px)', borderBottom: '1px solid rgba(255,255,255,0.08)', padding: '14px 32px', display: 'flex', alignItems: 'center', gap: '16px' }}>
       <BackBtn onClick={onBack} />
       <div style={{ width: '1px', height: '22px', background: 'rgba(255,255,255,0.1)' }} />
-      <div style={{ color: C.blue }}><SectionIcon id={id} size={20} /></div>
+      <div style={{ color: C.white }}><SectionIcon id={id} size={20} /></div>
       <span style={{ fontWeight: 600, fontSize: '16px', color: C.white }}>{t(`navigation.${id}`)}</span>
       <div style={{ marginLeft: 'auto' }}><DrakionLogo scale={0.82} /></div>
     </div>
@@ -194,24 +197,24 @@ function CoverScreen({ onExplore }: { onExplore: () => void }) {
 
         {/* Text */}
         <div style={{ flex: 1 }}>
-          <div className="anim-fade-up" style={{ animationDelay: '0.05s', fontWeight: 600, fontSize: '12px', letterSpacing: '0.22em', color: C.pink, textTransform: 'uppercase', marginBottom: '18px' }}>
+          <div className="anim-fade-up" style={{ animationDelay: '0.05s', fontWeight: 600, fontSize: '13px', letterSpacing: '0.22em', color: C.pink, textTransform: 'uppercase', marginBottom: '18px' }}>
             {t('cover.eyebrow')}
           </div>
 
           <div className="anim-fade-up" style={{ animationDelay: '0.12s', marginBottom: '18px' }}>
-            <h1 style={{ fontWeight: 800, fontSize: 'clamp(36px, 5.2vw, 68px)', color: C.white, lineHeight: 1.0, margin: 0 }}>
+            <h1 style={{ fontWeight: 800, fontSize: 'clamp(38px, 5.4vw, 72px)', color: C.white, lineHeight: 1.0, margin: 0 }}>
               {t('cover.title1')}
             </h1>
-            <h1 style={{ fontWeight: 300, fontSize: 'clamp(36px, 5.2vw, 68px)', color: C.lavender, lineHeight: 1.0, margin: 0, opacity: 0.85 }}>
+            <h1 style={{ fontWeight: 300, fontSize: 'clamp(38px, 5.4vw, 72px)', color: C.lavender, lineHeight: 1.0, margin: 0, opacity: 0.85 }}>
               {t('cover.title2')}
             </h1>
           </div>
 
           <div className="anim-fade-up" style={{ animationDelay: '0.22s', marginBottom: '44px' }}>
-            <p style={{ fontWeight: 500, fontSize: 'clamp(13px, 1.3vw, 15px)', color: C.white, margin: '0 0 5px', lineHeight: 1.5 }}>
+            <p style={{ fontWeight: 500, fontSize: 'clamp(15px, 1.5vw, 17px)', color: C.white, margin: '0 0 5px', lineHeight: 1.5 }}>
               {t('cover.lead')}
             </p>
-            <p style={{ fontWeight: 400, fontSize: 'clamp(13px, 1.3vw, 15px)', color: C.lavender, margin: '0 0 18px', opacity: 0.78, lineHeight: 1.5 }}>
+            <p style={{ fontWeight: 400, fontSize: 'clamp(15px, 1.5vw, 17px)', color: C.secondary, margin: '0 0 18px', opacity: 1, lineHeight: 1.5 }}>
               {t('cover.description')}
             </p>
           </div>
@@ -221,7 +224,7 @@ function CoverScreen({ onExplore }: { onExplore: () => void }) {
               onClick={onExplore}
               onMouseEnter={() => setBtnH(true)}
               onMouseLeave={() => setBtnH(false)}
-              style={{ fontWeight: 700, fontSize: '13px', letterSpacing: '0.13em', textTransform: 'uppercase', color: C.white, background: `linear-gradient(135deg, ${C.pink}, #d4003a)`, border: 'none', borderRadius: '10px', padding: '15px 34px', cursor: 'pointer', transition: 'all 0.25s', transform: btnH ? 'translateY(-3px) scale(1.02)' : 'none', boxShadow: btnH ? '0 14px 40px rgba(255,0,79,0.52)' : '0 6px 22px rgba(255,0,79,0.3)', display: 'inline-flex', alignItems: 'center', gap: '11px' }}>
+              style={{ fontWeight: 700, fontSize: '15px', letterSpacing: '0.13em', textTransform: 'uppercase', color: C.white, background: `linear-gradient(135deg, ${C.pink}, #d4003a)`, border: 'none', borderRadius: '10px', padding: '15px 34px', cursor: 'pointer', transition: 'all 0.25s', transform: btnH ? 'translateY(-3px) scale(1.02)' : 'none', boxShadow: btnH ? '0 14px 40px rgba(255,0,79,0.52)' : '0 6px 22px rgba(255,0,79,0.3)', display: 'inline-flex', alignItems: 'center', gap: '11px' }}>
               {t('cover.cta')}
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
                 <path d="M5 12h14M12 5l7 7-7 7" />
@@ -263,8 +266,8 @@ function MenuCard({ item, hov, setHov, onSelect }: {
         <SectionIcon id={item.id} />
       </div>
       <div style={{ flex: 1 }}>
-        <div style={{ fontWeight: 600, fontSize: '13px', color: C.white, lineHeight: 1.3 }}>{t(`navigation.${item.id}`)}</div>
-        <div style={{ fontSize: '11px', color: C.lavender, opacity: 0.52, marginTop: '3px' }}>{t(`menu.${item.id}`)}</div>
+        <div style={{ fontWeight: 600, fontSize: '14px', color: C.white, lineHeight: 1.3 }}>{t(`navigation.${item.id}`)}</div>
+        <div style={{ fontSize: '13px', color: C.tertiary, opacity: 1, marginTop: '3px' }}>{t(`menu.${item.id}`)}</div>
       </div>
       <div style={{ color: isPink ? C.pink : C.blue, opacity: hov ? 1 : 0, transform: hov ? 'translateX(0)' : 'translateX(-5px)', transition: 'all 0.22s' }}>
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
@@ -286,10 +289,10 @@ function MenuScreen({ onSelect }: { onSelect: (id: SectionId) => void }) {
       </div>
 
       <div style={{ textAlign: 'center', marginBottom: '32px' }}>
-        <h2 style={{ fontWeight: 700, fontSize: 'clamp(22px, 3vw, 32px)', color: C.white, margin: '0 0 7px' }}>
+        <h2 style={{ fontWeight: 700, fontSize: 'clamp(24px, 3.2vw, 34px)', color: C.white, margin: '0 0 7px' }}>
           {t('menu.title')}
         </h2>
-        <p style={{ fontSize: '13px', color: C.lavender, opacity: 0.48, margin: 0 }}>
+        <p style={{ fontSize: '15px', color: C.secondary, opacity: 1, margin: 0 }}>
           {t('menu.description')}
         </p>
       </div>
@@ -306,8 +309,8 @@ function MenuScreen({ onSelect }: { onSelect: (id: SectionId) => void }) {
             <DragonMascot size={76} />
           </div>
           <div style={{ textAlign: 'center' }}>
-            <div style={{ fontWeight: 700, fontSize: '11px', color: C.white }}>Drakion Tech</div>
-            <div style={{ fontWeight: 300, fontSize: '9px', color: C.pink, letterSpacing: '0.2em' }}>{t('menu.portfolio')}</div>
+            <div style={{ fontWeight: 700, fontSize: '12px', color: C.white }}>Drakion Tech</div>
+            <div style={{ fontWeight: 300, fontSize: '10px', color: C.pink, letterSpacing: '0.2em' }}>{t('menu.portfolio')}</div>
           </div>
         </div>
         <MenuCard item={MENU[4]} hov={hov === MENU[4].id} setHov={setHov} onSelect={onSelect} />
@@ -327,8 +330,8 @@ function MenuScreen({ onSelect }: { onSelect: (id: SectionId) => void }) {
             <SectionIcon id="contacto" />
           </div>
           <div style={{ textAlign: 'left' }}>
-            <div style={{ fontWeight: 600, fontSize: '13px', color: C.white }}>{t('navigation.contacto')}</div>
-            <div style={{ fontSize: '11px', color: C.lavender, opacity: 0.5, marginTop: '2px' }}>{t('menu.contact')}</div>
+            <div style={{ fontWeight: 600, fontSize: '14px', color: C.white }}>{t('navigation.contacto')}</div>
+            <div style={{ fontSize: '13px', color: C.tertiary, opacity: 1, marginTop: '2px' }}>{t('menu.contact')}</div>
           </div>
           <div style={{ marginLeft: 'auto', color: C.pink, opacity: hovContact ? 1 : 0, transition: 'all 0.22s' }}>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
@@ -398,10 +401,10 @@ function QuienesSomos() {
     <div style={{ padding: '48px 40px', maxWidth: '1080px', margin: '0 auto' }}>
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '48px', alignItems: 'start' }}>
         <div>
-          <h2 style={{ fontWeight: 300, fontSize: '34px', color: C.white, margin: '0 0 6px' }}>
+          <h2 style={{ fontWeight: 300, fontSize: '36px', color: C.white, margin: '0 0 6px' }}>
             {t('about.title1')} <span style={{ color: C.pink, fontWeight: 700 }}>{t('about.title2')}</span>
           </h2>
-          <p style={{ fontSize: '13px', color: C.lavender, opacity: 0.5, marginBottom: '28px' }}>
+          <p style={{ fontSize: '15px', color: C.tertiary, opacity: 1, marginBottom: '28px' }}>
             {t('common.selectCard')}
           </p>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '11px' }}>
@@ -415,15 +418,15 @@ function QuienesSomos() {
                       {card.icon}
                     </div>
                     <div style={{ flex: 1 }}>
-                      <div style={{ fontWeight: 600, fontSize: '15px', color: C.white }}>{card.title}</div>
-                      <div style={{ fontSize: '12px', color: C.lavender, opacity: 0.55, marginTop: '2px' }}>{card.preview}</div>
+                      <div style={{ fontWeight: 600, fontSize: '16px', color: C.white }}>{card.title}</div>
+                      <div style={{ fontSize: '14px', color: C.tertiary, opacity: 1, marginTop: '2px' }}>{card.preview}</div>
                     </div>
                     <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke={C.lavender} strokeWidth="2" strokeLinecap="round" style={{ transform: open ? 'rotate(180deg)' : 'none', transition: 'transform 0.3s', opacity: 0.55, flexShrink: 0 }}>
                       <path d="M6 9l6 6 6-6" />
                     </svg>
                   </div>
                   {open && (
-                    <div style={{ marginTop: '14px', paddingTop: '14px', borderTop: '1px solid rgba(42,62,244,0.2)', fontSize: '14px', color: C.lavender, lineHeight: 1.75, animation: 'fadeInUp 0.3s ease' }}>
+                    <div style={{ marginTop: '14px', paddingTop: '14px', borderTop: '1px solid rgba(42,62,244,0.2)', fontSize: '16px', color: C.secondary, lineHeight: 1.75, animation: 'fadeInUp 0.3s ease' }}>
                       {card.content}
                     </div>
                   )}
@@ -435,7 +438,7 @@ function QuienesSomos() {
 
         <div>
           <div style={{ background: 'rgba(42,62,244,0.07)', border: '1px solid rgba(42,62,244,0.16)', borderRadius: '16px', padding: '30px', marginBottom: '24px' }}>
-            <p style={{ fontSize: '17px', lineHeight: 1.85, color: C.white, margin: 0 }}>
+            <p style={{ fontSize: '18px', lineHeight: 1.85, color: C.white, margin: 0 }}>
               {t('about.statement')}
             </p>
           </div>
@@ -466,11 +469,11 @@ function ComoLoHacemos() {
   ].map((cap, index) => ({ ...cap, label: list('how.capabilities')[index] }))
   return (
     <div style={{ padding: '48px 40px', maxWidth: '1080px', margin: '0 auto' }}>
-      <h2 style={{ fontWeight: 300, fontSize: '34px', color: C.white, margin: '0 0 28px' }}>
+      <h2 style={{ fontWeight: 300, fontSize: '36px', color: C.white, margin: '0 0 28px' }}>
         {t('how.title1')} <span style={{ color: C.pink, fontWeight: 700 }}>{t('how.title2')}</span>
       </h2>
       <div style={{ background: 'rgba(228,229,242,0.04)', border: '1px solid rgba(228,229,242,0.09)', borderRadius: '16px', padding: '26px', marginBottom: '40px' }}>
-        <p style={{ fontSize: '15px', lineHeight: 1.9, color: C.lavender, margin: 0 }}>
+        <p style={{ fontSize: '17px', lineHeight: 1.9, color: C.secondary, margin: 0 }}>
           {t('how.description')}
         </p>
       </div>
@@ -481,7 +484,7 @@ function ComoLoHacemos() {
             <div style={{ color: hov === i ? C.blue : C.lavender, opacity: hov === i ? 1 : 0.6, transition: 'all 0.22s', marginBottom: '12px', display: 'flex', justifyContent: 'center' }}>
               {cap.icon}
             </div>
-            <div style={{ fontSize: '12px', fontWeight: 500, color: hov === i ? C.white : C.lavender, lineHeight: 1.4, transition: 'color 0.22s' }}>{cap.label}</div>
+            <div style={{ fontSize: '14px', fontWeight: 500, color: hov === i ? C.white : C.secondary, lineHeight: 1.4, transition: 'color 0.22s' }}>{cap.label}</div>
           </div>
         ))}
       </div>
@@ -517,10 +520,10 @@ function ModeloServicio() {
             <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '24px', opacity: 0.7 }}>
               <DragonMascot size={130} />
             </div>
-            <h2 style={{ fontWeight: 300, fontSize: '28px', color: C.white, margin: '0 0 12px', lineHeight: 1.2 }}>
+            <h2 style={{ fontWeight: 300, fontSize: '30px', color: C.white, margin: '0 0 12px', lineHeight: 1.2 }}>
               {t('model.title1')} <br /><span style={{ fontWeight: 700 }}>{t('model.title2')}</span>
             </h2>
-            <p style={{ fontSize: '14px', color: C.lavender, opacity: 0.65, margin: 0, lineHeight: 1.6 }}>
+            <p style={{ fontSize: '16px', color: C.secondary, opacity: 1, margin: 0, lineHeight: 1.6 }}>
               {t('model.description')}
             </p>
           </div>
@@ -541,9 +544,9 @@ function ModeloServicio() {
                     {p.icon}
                   </div>
                   <div>
-                    <div style={{ fontWeight: 600, fontSize: '15px', color: C.white, lineHeight: 1.3 }}>{p.title}</div>
+                    <div style={{ fontWeight: 600, fontSize: '16px', color: C.white, lineHeight: 1.3 }}>{p.title}</div>
                     {open && (
-                      <div style={{ fontSize: '13px', color: C.lavender, lineHeight: 1.7, marginTop: '10px', animation: 'fadeInUp 0.3s ease' }}>
+                      <div style={{ fontSize: '15px', color: C.secondary, lineHeight: 1.7, marginTop: '10px', animation: 'fadeInUp 0.3s ease' }}>
                         {p.desc}
                       </div>
                     )}
@@ -607,10 +610,10 @@ function LineasNegocio() {
   ].map((line, index) => ({ ...line, title: t(`business.lines.${index}.title`), items: list(`business.lines.${index}.items`) }))
   return (
     <div style={{ padding: '48px 40px', maxWidth: '1080px', margin: '0 auto' }}>
-      <h2 style={{ fontWeight: 300, fontSize: '34px', color: C.white, margin: '0 0 8px' }}>
+      <h2 style={{ fontWeight: 300, fontSize: '36px', color: C.white, margin: '0 0 8px' }}>
         {t('business.title1')} <span style={{ color: C.pink, fontWeight: 700 }}>{t('business.title2')}</span>
       </h2>
-      <p style={{ fontSize: '13px', color: C.lavender, opacity: 0.5, marginBottom: '36px' }}>
+      <p style={{ fontSize: '15px', color: C.tertiary, opacity: 1, marginBottom: '36px' }}>
         {t('common.selectLine')}
       </p>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))', gap: '14px' }}>
@@ -623,7 +626,7 @@ function LineasNegocio() {
               <div style={{ marginBottom: '16px' }}>
                 <img src={line.image} alt={line.title} style={{ width: '120px', height: '120px', objectFit: 'contain', display: 'block' }} />
               </div>
-              <div style={{ fontWeight: 700, fontSize: '14px', color: C.white, lineHeight: 1.35, marginBottom: open ? '14px' : '0' }}>
+              <div style={{ fontWeight: 700, fontSize: '15px', color: C.white, lineHeight: 1.35, marginBottom: open ? '14px' : '0' }}>
                 {line.title}
               </div>
               {open && (
@@ -631,12 +634,12 @@ function LineasNegocio() {
                   <div style={{ width: '32px', height: '2px', background: line.accent, margin: '12px 0', borderRadius: '1px' }} />
                   <ul style={{ margin: 0, paddingLeft: '18px' }}>
                     {line.items.map((item, j) => (
-                      <li key={j} style={{ fontSize: '13px', color: C.lavender, lineHeight: 1.7, marginBottom: '4px' }}>{item}</li>
+                      <li key={j} style={{ fontSize: '15px', color: C.secondary, lineHeight: 1.7, marginBottom: '4px' }}>{item}</li>
                     ))}
                   </ul>
                 </div>
               )}
-              <div style={{ marginTop: '14px', fontSize: '11px', color: line.accent, opacity: open ? 0.8 : 0.4, fontWeight: 500, display: 'flex', alignItems: 'center', gap: '4px' }}>
+              <div style={{ marginTop: '14px', fontSize: '12px', color: C.white, opacity: open ? 1 : 0.72, fontWeight: 500, display: 'flex', alignItems: 'center', gap: '4px' }}>
                 {open ? t('common.close') : t('common.details')}
                 <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
                   <path d={open ? 'M6 9l6 6 6-6' : 'M9 18l6-6-6-6'} />
@@ -679,13 +682,13 @@ function ExperienciaAlianzas() {
             </p>
           </div>
           <div style={{ background: 'rgba(255,255,255,0.04)', border: `1px solid ${C.border}`, borderRadius: '16px', padding: '28px' }}>
-            <p style={{ fontSize: '14px', lineHeight: 1.8, color: C.lavender, margin: 0, opacity: 0.82 }}>
+            <p style={{ fontSize: '15px', lineHeight: 1.8, color: C.secondary, margin: 0, opacity: 1 }}>
               {t('experience.description2')}
             </p>
           </div>
         </div>
         <div>
-          <div style={{ fontWeight: 600, fontSize: '13px', color: C.lavender, opacity: 0.55, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '16px' }}>
+          <div style={{ fontWeight: 600, fontSize: '14px', color: C.tertiary, opacity: 1, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '16px' }}>
             {t('experience.industriesTitle')}
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
@@ -693,7 +696,7 @@ function ExperienciaAlianzas() {
               <div key={i} onMouseEnter={() => setHovInd(i)} onMouseLeave={() => setHovInd(null)}
                 style={{ display: 'flex', alignItems: 'center', gap: '10px', background: hovInd === i ? C.blueGlass : 'rgba(255,255,255,0.04)', border: `1px solid ${hovInd === i ? C.blueBorder : C.border}`, borderRadius: '10px', padding: '12px 14px', transition: 'all 0.2s', cursor: 'default' }}>
                 <div style={{ color: hovInd === i ? C.blue : C.lavender, opacity: hovInd === i ? 1 : 0.55, transition: 'all 0.2s', flexShrink: 0 }}>{ind.icon}</div>
-                <span style={{ fontSize: '12px', fontWeight: 500, color: hovInd === i ? C.white : C.lavender, transition: 'color 0.2s' }}>{ind.name}</span>
+                <span style={{ fontSize: '13px', fontWeight: 500, color: hovInd === i ? C.white : C.secondary, transition: 'color 0.2s' }}>{ind.name}</span>
               </div>
             ))}
           </div>
@@ -742,7 +745,7 @@ function ClientesAlianzas() {
       </h2>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))', gap: '36px' }}>
         <div>
-          <div style={{ fontWeight: 600, fontSize: '12px', color: C.lavender, opacity: 0.5, letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: '14px' }}>
+          <div style={{ fontWeight: 600, fontSize: '13px', color: C.tertiary, opacity: 1, letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: '14px' }}>
             {t('common.clients')} — {clientes.length}
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(138px, 1fr))', gap: '10px' }}>
@@ -750,7 +753,7 @@ function ClientesAlianzas() {
           </div>
         </div>
         <div>
-          <div style={{ fontWeight: 600, fontSize: '12px', color: C.lavender, opacity: 0.5, letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: '14px' }}>
+          <div style={{ fontWeight: 600, fontSize: '13px', color: C.tertiary, opacity: 1, letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: '14px' }}>
             {t('common.partnerships')}
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(138px, 1fr))', gap: '10px' }}>
@@ -758,10 +761,10 @@ function ClientesAlianzas() {
           </div>
           <div style={{ marginTop: '32px', background: 'rgba(255,0,79,0.07)', border: `1px solid ${C.pinkBorder}`, borderRadius: '12px', padding: '20px' }}>
             <div style={{ fontWeight: 700, fontSize: '28px', color: C.pink, lineHeight: 1 }}>14</div>
-            <div style={{ fontSize: '12px', color: C.lavender, opacity: 0.65, marginTop: '4px' }}>{t('common.activeClients')}</div>
+            <div style={{ fontSize: '13px', color: C.secondary, opacity: 1, marginTop: '4px' }}>{t('common.activeClients')}</div>
             <div style={{ width: '100%', height: '1px', background: 'rgba(255,0,79,0.15)', margin: '14px 0' }} />
-            <div style={{ fontWeight: 700, fontSize: '28px', color: C.blue, lineHeight: 1 }}>2</div>
-            <div style={{ fontSize: '12px', color: C.lavender, opacity: 0.65, marginTop: '4px' }}>{t('common.strategicPartnerships')}</div>
+            <div style={{ fontWeight: 700, fontSize: '28px', color: C.white, lineHeight: 1 }}>2</div>
+            <div style={{ fontSize: '13px', color: C.secondary, opacity: 1, marginTop: '4px' }}>{t('common.strategicPartnerships')}</div>
           </div>
         </div>
       </div>
@@ -803,7 +806,7 @@ function GestionProyectos() {
         {t('projects.title1')} <br />
         <span style={{ color: C.pink, fontWeight: 700 }}>{t('projects.title2')}</span>
       </h2>
-      <p style={{ fontSize: '14px', color: C.lavender, opacity: 0.65, marginBottom: '36px', lineHeight: 1.7, maxWidth: '680px' }}>
+      <p style={{ fontSize: '15px', color: C.secondary, opacity: 1, marginBottom: '36px', lineHeight: 1.7, maxWidth: '680px' }}>
         {t('projects.description')}
       </p>
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
@@ -885,19 +888,19 @@ function TecnologiasHerramientas() {
       <h2 style={{ fontWeight: 300, fontSize: '34px', color: C.white, margin: '0 0 10px' }}>
         {t('technology.title1')} <span style={{ color: C.pink, fontWeight: 700 }}>{t('technology.title2')}</span>
       </h2>
-      <p style={{ fontSize: '14px', color: C.lavender, opacity: 0.65, marginBottom: '12px', lineHeight: 1.7, maxWidth: '720px' }}>
+      <p style={{ fontSize: '15px', color: C.secondary, opacity: 1, marginBottom: '12px', lineHeight: 1.7, maxWidth: '720px' }}>
         {t('technology.description')}
       </p>
 
       {/* Filter chips */}
       <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginBottom: '28px' }}>
         <button onClick={() => setActiveGroup(null)}
-          style={{ fontWeight: 600, fontSize: '12px', color: activeGroup === null ? C.navy : C.lavender, background: activeGroup === null ? C.blue : 'rgba(255,255,255,0.06)', border: `1px solid ${activeGroup === null ? C.blue : C.border}`, borderRadius: '20px', padding: '6px 14px', cursor: 'pointer', transition: 'all 0.2s' }}>
+          style={{ fontWeight: 600, fontSize: '13px', color: activeGroup === null ? C.white : C.secondary, background: activeGroup === null ? C.blue : 'rgba(255,255,255,0.06)', border: `1px solid ${activeGroup === null ? C.blue : C.border}`, borderRadius: '20px', padding: '6px 14px', cursor: 'pointer', transition: 'all 0.2s' }}>
           {t('common.all')} — {allTechs.length}
         </button>
         {translatedGroups.map(g => (
           <button key={g.name} onClick={() => setActiveGroup(activeGroup === g.name ? null : g.name)}
-            style={{ fontWeight: 500, fontSize: '12px', color: activeGroup === g.name ? C.navy : C.lavender, background: activeGroup === g.name ? C.pink : 'rgba(255,255,255,0.06)', border: `1px solid ${activeGroup === g.name ? C.pink : C.border}`, borderRadius: '20px', padding: '6px 14px', cursor: 'pointer', transition: 'all 0.2s' }}>
+            style={{ fontWeight: 500, fontSize: '13px', color: activeGroup === g.name ? C.white : C.secondary, background: activeGroup === g.name ? C.pink : 'rgba(255,255,255,0.06)', border: `1px solid ${activeGroup === g.name ? C.pink : C.border}`, borderRadius: '20px', padding: '6px 14px', cursor: 'pointer', transition: 'all 0.2s' }}>
             {g.name}
           </button>
         ))}
@@ -906,7 +909,7 @@ function TecnologiasHerramientas() {
       <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
         {displayGroups.map(group => (
           <div key={group.name}>
-            <div style={{ fontSize: '12px', fontWeight: 600, color: C.blue, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '10px', opacity: 0.85 }}>
+            <div style={{ fontSize: '13px', fontWeight: 600, color: C.white, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '10px', opacity: 1 }}>
               {group.name}
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 132px), 1fr))', gap: '12px' }}>
@@ -959,7 +962,7 @@ function Contacto() {
           <h2 style={{ fontWeight: 300, fontSize: '34px', color: C.white, margin: '0 0 10px' }}>
             {t('contact.title')}
           </h2>
-          <p style={{ fontSize: '15px', color: C.lavender, opacity: 0.65, marginBottom: '36px', lineHeight: 1.75 }}>
+          <p style={{ fontSize: '16px', color: C.secondary, opacity: 1, marginBottom: '36px', lineHeight: 1.75 }}>
             {t('contact.description')}
           </p>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
@@ -972,8 +975,8 @@ function Contacto() {
                 style={{ display: 'flex', alignItems: 'center', gap: '16px', background: isHov ? C.blueGlass : 'rgba(255,255,255,0.05)', border: `1px solid ${isHov ? C.blueBorder : C.border}`, borderRadius: '12px', padding: '16px 20px', textDecoration: 'none', cursor: 'pointer', transform: isHov ? 'translateY(-2px)' : 'none', transition: 'transform 0.2s ease, border-color 0.2s ease, background 0.2s ease' }}>
                 <div style={{ color: C.blue, flexShrink: 0 }}>{item.icon}</div>
                 <div>
-                  <div style={{ fontSize: '11px', color: C.lavender, opacity: 0.5, letterSpacing: '0.08em', textTransform: 'uppercase' }}>{item.label}</div>
-                  <div style={{ fontSize: '14px', fontWeight: 500, color: C.white, marginTop: '2px' }}>{item.value}</div>
+                  <div style={{ fontSize: '12px', color: C.tertiary, opacity: 1, letterSpacing: '0.08em', textTransform: 'uppercase' }}>{item.label}</div>
+                  <div style={{ fontSize: '15px', fontWeight: 500, color: C.white, marginTop: '2px' }}>{item.value}</div>
                 </div>
               </a>
               )
