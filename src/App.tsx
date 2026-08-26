@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { useI18n } from './i18n'
 import dragonMascotImg from '@/imports/ChatGPT_Image_13_ago_2026__09_46_17-removebg-preview.png'
 import logoImg from '@/imports/Recurso-2.png'
 import isotipoImg from '@/imports/cropped-Dragon-2.png'
@@ -58,6 +59,25 @@ function DragonMascot({ size = 280, style }: { size?: number; style?: React.CSSP
       height={size}
       style={{ objectFit: 'contain', display: 'block', ...style }}
     />
+  )
+}
+
+function LanguageSelector() {
+  const { language, setLanguage, t } = useI18n()
+  const flags = { es: '🇨🇴', en: '🇺🇸' } as const
+  return (
+    <div aria-label={t('language.label')} style={{ position: 'fixed', top: '18px', right: '24px', zIndex: 40, display: 'flex', alignItems: 'center', padding: '4px', border: `1px solid ${C.border}`, borderRadius: '9px', background: 'rgba(7,25,71,0.82)', backdropFilter: 'blur(12px)' }}>
+      {(['es', 'en'] as const).map((option, index) => (
+        <React.Fragment key={option}>
+          {index > 0 && <span aria-hidden="true" style={{ width: '1px', height: '17px', background: 'rgba(228,229,242,0.2)', margin: '0 2px' }} />}
+          <button type="button" onClick={() => setLanguage(option)} aria-pressed={language === option}
+            style={{ border: 'none', borderRadius: '6px', padding: '6px 9px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '5px', fontSize: '11px', fontWeight: 700, letterSpacing: '0.08em', color: language === option ? C.navy : C.lavender, background: language === option ? C.pink : 'transparent', transition: 'all 0.2s' }}>
+            <span aria-hidden="true" style={{ fontSize: '14px', lineHeight: 1 }}>{flags[option]}</span>
+            <span>{t(`language.${option}`)}</span>
+          </button>
+        </React.Fragment>
+      ))}
+    </div>
   )
 }
 
@@ -122,6 +142,7 @@ function BgDecor() {
 // Shared: back button
 // ─────────────────────────────────────────────
 function BackBtn({ onClick }: { onClick: () => void }) {
+  const { t } = useI18n()
   const [h, setH] = useState(false)
   return (
     <button onClick={onClick} onMouseEnter={() => setH(true)} onMouseLeave={() => setH(false)}
@@ -129,24 +150,20 @@ function BackBtn({ onClick }: { onClick: () => void }) {
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
         <path d="M19 12H5M12 5l-7 7 7 7" />
       </svg>
-      Volver al menú
+      {t('navigation.back')}
     </button>
   )
 }
 
 // Section panel top bar
 function SectionBar({ id, onBack }: { id: SectionId; onBack: () => void }) {
-  const titles: Record<SectionId, string> = {
-    quienes: '¿Quiénes somos?', como: '¿Cómo lo hacemos?', modelo: 'Nuestro modelo de servicio',
-    lineas: 'Líneas de negocio', experiencia: 'Experiencia y alianzas', clientes: 'Clientes y alianzas',
-    gestion: 'Gestión de proyectos', tecnologias: 'Tecnologías y herramientas', contacto: 'Contacto',
-  }
+  const { t } = useI18n()
   return (
     <div style={{ position: 'sticky', top: 0, zIndex: 20, background: 'rgba(7,25,71,0.94)', backdropFilter: 'blur(14px)', borderBottom: '1px solid rgba(255,255,255,0.08)', padding: '14px 32px', display: 'flex', alignItems: 'center', gap: '16px' }}>
       <BackBtn onClick={onBack} />
       <div style={{ width: '1px', height: '22px', background: 'rgba(255,255,255,0.1)' }} />
       <div style={{ color: C.blue }}><SectionIcon id={id} size={20} /></div>
-      <span style={{ fontWeight: 600, fontSize: '16px', color: C.white }}>{titles[id]}</span>
+      <span style={{ fontWeight: 600, fontSize: '16px', color: C.white }}>{t(`navigation.${id}`)}</span>
       <div style={{ marginLeft: 'auto' }}><DrakionLogo scale={0.82} /></div>
     </div>
   )
@@ -156,6 +173,7 @@ function SectionBar({ id, onBack }: { id: SectionId; onBack: () => void }) {
 // COVER SCREEN
 // ─────────────────────────────────────────────
 function CoverScreen({ onExplore }: { onExplore: () => void }) {
+  const { t } = useI18n()
   const [btnH, setBtnH] = useState(false)
   return (
     <div style={{ position: 'relative', minHeight: '100vh', zIndex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '80px 48px 60px' }}>
@@ -177,24 +195,24 @@ function CoverScreen({ onExplore }: { onExplore: () => void }) {
         {/* Text */}
         <div style={{ flex: 1 }}>
           <div className="anim-fade-up" style={{ animationDelay: '0.05s', fontWeight: 600, fontSize: '12px', letterSpacing: '0.22em', color: C.pink, textTransform: 'uppercase', marginBottom: '18px' }}>
-            Portafolio de servicios
+            {t('cover.eyebrow')}
           </div>
 
           <div className="anim-fade-up" style={{ animationDelay: '0.12s', marginBottom: '18px' }}>
             <h1 style={{ fontWeight: 800, fontSize: 'clamp(36px, 5.2vw, 68px)', color: C.white, lineHeight: 1.0, margin: 0 }}>
-              Innovación
+              {t('cover.title1')}
             </h1>
             <h1 style={{ fontWeight: 300, fontSize: 'clamp(36px, 5.2vw, 68px)', color: C.lavender, lineHeight: 1.0, margin: 0, opacity: 0.85 }}>
-              Tecnológica
+              {t('cover.title2')}
             </h1>
           </div>
 
           <div className="anim-fade-up" style={{ animationDelay: '0.22s', marginBottom: '44px' }}>
             <p style={{ fontWeight: 500, fontSize: 'clamp(13px, 1.3vw, 15px)', color: C.white, margin: '0 0 5px', lineHeight: 1.5 }}>
-              Innovación tecnológica para el desarrollo de soluciones:
+              {t('cover.lead')}
             </p>
             <p style={{ fontWeight: 400, fontSize: 'clamp(13px, 1.3vw, 15px)', color: C.lavender, margin: '0 0 18px', opacity: 0.78, lineHeight: 1.5 }}>
-              Desarrollo, consultoría, soporte y gestión eficiente.
+              {t('cover.description')}
             </p>
           </div>
 
@@ -204,7 +222,7 @@ function CoverScreen({ onExplore }: { onExplore: () => void }) {
               onMouseEnter={() => setBtnH(true)}
               onMouseLeave={() => setBtnH(false)}
               style={{ fontWeight: 700, fontSize: '13px', letterSpacing: '0.13em', textTransform: 'uppercase', color: C.white, background: `linear-gradient(135deg, ${C.pink}, #d4003a)`, border: 'none', borderRadius: '10px', padding: '15px 34px', cursor: 'pointer', transition: 'all 0.25s', transform: btnH ? 'translateY(-3px) scale(1.02)' : 'none', boxShadow: btnH ? '0 14px 40px rgba(255,0,79,0.52)' : '0 6px 22px rgba(255,0,79,0.3)', display: 'inline-flex', alignItems: 'center', gap: '11px' }}>
-              Explorar Portafolio
+              {t('cover.cta')}
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
                 <path d="M5 12h14M12 5l7 7-7 7" />
               </svg>
@@ -223,21 +241,17 @@ function CoverScreen({ onExplore }: { onExplore: () => void }) {
 // ─────────────────────────────────────────────
 // MENU SCREEN
 // ─────────────────────────────────────────────
-const MENU: Array<{ id: SectionId; title: string; sub: string; accent: 'blue' | 'pink' }> = [
-  { id: 'quienes', title: '¿Quiénes somos?', sub: 'Identidad corporativa', accent: 'blue' },
-  { id: 'como', title: '¿Cómo lo hacemos?', sub: 'Metodología y enfoque', accent: 'blue' },
-  { id: 'modelo', title: 'Modelo de servicio', sub: 'Tres pilares estratégicos', accent: 'blue' },
-  { id: 'lineas', title: 'Líneas de negocio', sub: '6 líneas de servicio', accent: 'pink' },
-  { id: 'experiencia', title: 'Experiencia y alianzas', sub: 'Industrias e impacto', accent: 'blue' },
-  { id: 'clientes', title: 'Clientes y alianzas', sub: '14 clientes · 2 alianzas', accent: 'blue' },
-  { id: 'gestion', title: 'Gestión de proyectos', sub: 'Capacidades y ciclo', accent: 'blue' },
-  { id: 'tecnologias', title: 'Tecnologías', sub: '20+ herramientas', accent: 'pink' },
+const MENU: Array<{ id: Exclude<SectionId, 'contacto'>; accent: 'blue' | 'pink' }> = [
+  { id: 'quienes', accent: 'blue' }, { id: 'como', accent: 'blue' }, { id: 'modelo', accent: 'blue' },
+  { id: 'lineas', accent: 'pink' }, { id: 'experiencia', accent: 'blue' }, { id: 'clientes', accent: 'blue' },
+  { id: 'gestion', accent: 'blue' }, { id: 'tecnologias', accent: 'pink' },
 ]
 
 function MenuCard({ item, hov, setHov, onSelect }: {
   item: typeof MENU[0]; hov: boolean
   setHov: (id: SectionId | null) => void; onSelect: (id: SectionId) => void
 }) {
+  const { t } = useI18n()
   const isPink = item.accent === 'pink'
   return (
     <button
@@ -249,8 +263,8 @@ function MenuCard({ item, hov, setHov, onSelect }: {
         <SectionIcon id={item.id} />
       </div>
       <div style={{ flex: 1 }}>
-        <div style={{ fontWeight: 600, fontSize: '13px', color: C.white, lineHeight: 1.3 }}>{item.title}</div>
-        <div style={{ fontSize: '11px', color: C.lavender, opacity: 0.52, marginTop: '3px' }}>{item.sub}</div>
+        <div style={{ fontWeight: 600, fontSize: '13px', color: C.white, lineHeight: 1.3 }}>{t(`navigation.${item.id}`)}</div>
+        <div style={{ fontSize: '11px', color: C.lavender, opacity: 0.52, marginTop: '3px' }}>{t(`menu.${item.id}`)}</div>
       </div>
       <div style={{ color: isPink ? C.pink : C.blue, opacity: hov ? 1 : 0, transform: hov ? 'translateX(0)' : 'translateX(-5px)', transition: 'all 0.22s' }}>
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
@@ -262,6 +276,7 @@ function MenuCard({ item, hov, setHov, onSelect }: {
 }
 
 function MenuScreen({ onSelect }: { onSelect: (id: SectionId) => void }) {
+  const { t } = useI18n()
   const [hov, setHov] = useState<SectionId | null>(null)
   const [hovContact, setHovContact] = useState(false)
   return (
@@ -272,10 +287,10 @@ function MenuScreen({ onSelect }: { onSelect: (id: SectionId) => void }) {
 
       <div style={{ textAlign: 'center', marginBottom: '32px' }}>
         <h2 style={{ fontWeight: 700, fontSize: 'clamp(22px, 3vw, 32px)', color: C.white, margin: '0 0 7px' }}>
-          Explora el portafolio
+          {t('menu.title')}
         </h2>
         <p style={{ fontSize: '13px', color: C.lavender, opacity: 0.48, margin: 0 }}>
-          Selecciona una sección para conocer más
+          {t('menu.description')}
         </p>
       </div>
 
@@ -292,7 +307,7 @@ function MenuScreen({ onSelect }: { onSelect: (id: SectionId) => void }) {
           </div>
           <div style={{ textAlign: 'center' }}>
             <div style={{ fontWeight: 700, fontSize: '11px', color: C.white }}>Drakion Tech</div>
-            <div style={{ fontWeight: 300, fontSize: '9px', color: C.pink, letterSpacing: '0.2em' }}>PORTAFOLIO</div>
+            <div style={{ fontWeight: 300, fontSize: '9px', color: C.pink, letterSpacing: '0.2em' }}>{t('menu.portfolio')}</div>
           </div>
         </div>
         <MenuCard item={MENU[4]} hov={hov === MENU[4].id} setHov={setHov} onSelect={onSelect} />
@@ -312,8 +327,8 @@ function MenuScreen({ onSelect }: { onSelect: (id: SectionId) => void }) {
             <SectionIcon id="contacto" />
           </div>
           <div style={{ textAlign: 'left' }}>
-            <div style={{ fontWeight: 600, fontSize: '13px', color: C.white }}>Contacto</div>
-            <div style={{ fontSize: '11px', color: C.lavender, opacity: 0.5, marginTop: '2px' }}>Ibagué-Tolima · Colombia · contacto@drakiontech.com</div>
+            <div style={{ fontWeight: 600, fontSize: '13px', color: C.white }}>{t('navigation.contacto')}</div>
+            <div style={{ fontSize: '11px', color: C.lavender, opacity: 0.5, marginTop: '2px' }}>{t('menu.contact')}</div>
           </div>
           <div style={{ marginLeft: 'auto', color: C.pink, opacity: hovContact ? 1 : 0, transition: 'all 0.22s' }}>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
@@ -360,25 +375,23 @@ function SectionPanel({ id, onBack }: { id: SectionId; onBack: () => void }) {
 // SECTION: Quiénes somos
 // ─────────────────────────────────────────────
 function QuienesSomos() {
+  const { t } = useI18n()
   const [expanded, setExpanded] = useState<string | null>(null)
   const cards = [
     {
-      id: 'vision', title: 'Visión',
+      id: 'vision', title: t('about.vision.title'),
       icon: <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"><circle cx="12" cy="12" r="3" /><path d="M12 5C7.25 5 3.09 8.13 2 12c1.09 3.87 5.25 7 10 7s8.91-3.13 10-7c-1.09-3.87-5.25-7-10-7z" /></svg>,
-      preview: 'Desarrollar soluciones con innovación tecnológica',
-      content: 'Ser una empresa referente en soluciones tecnológicas innovadoras, reconocida a nivel nacional e internacional por integrar desarrollo ágil, inteligencia artificial y talento humano especializado.'
+      preview: t('about.vision.preview'), content: t('about.vision.content')
     },
     {
-      id: 'mision', title: 'Misión',
+      id: 'mision', title: t('about.mission.title'),
       icon: <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"><circle cx="12" cy="12" r="10" /><circle cx="12" cy="12" r="6" /><circle cx="12" cy="12" r="2" /></svg>,
-      preview: 'Transformar ideas en soluciones digitales',
-      content: 'Transformar ideas en soluciones digitales mediante metodologías ágiles, talento humano capacitado y herramientas tecnológicas que responden a necesidades de negocio.'
+      preview: t('about.mission.preview'), content: t('about.mission.content')
     },
     {
-      id: 'valores', title: 'Valores corporativos',
+      id: 'valores', title: t('about.values.title'),
       icon: <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /><polyline points="9 22 9 12 15 12 15 22" /></svg>,
-      preview: 'Innovación · Cercanía · Excelencia · Integridad',
-      content: 'Innovación continua, cercanía, excelencia técnica, integridad y compromiso con los resultados. La tecnología es el medio y las personas orientan cada desarrollo.'
+      preview: t('about.values.preview'), content: t('about.values.content')
     },
   ]
   return (
@@ -386,10 +399,10 @@ function QuienesSomos() {
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '48px', alignItems: 'start' }}>
         <div>
           <h2 style={{ fontWeight: 300, fontSize: '34px', color: C.white, margin: '0 0 6px' }}>
-            ¿Quiénes <span style={{ color: C.pink, fontWeight: 700 }}>somos?</span>
+            {t('about.title1')} <span style={{ color: C.pink, fontWeight: 700 }}>{t('about.title2')}</span>
           </h2>
           <p style={{ fontSize: '13px', color: C.lavender, opacity: 0.5, marginBottom: '28px' }}>
-            Selecciona una tarjeta para explorar
+            {t('common.selectCard')}
           </p>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '11px' }}>
             {cards.map(card => {
@@ -423,9 +436,7 @@ function QuienesSomos() {
         <div>
           <div style={{ background: 'rgba(42,62,244,0.07)', border: '1px solid rgba(42,62,244,0.16)', borderRadius: '16px', padding: '30px', marginBottom: '24px' }}>
             <p style={{ fontSize: '17px', lineHeight: 1.85, color: C.white, margin: 0 }}>
-              <strong style={{ color: C.white }}>Drakion Tech</strong> desarrolla{' '}
-              <strong>soluciones digitales</strong> que transforman ideas en capacidades{' '}
-              <strong style={{ color: C.lavender }}>alineadas con las necesidades de negocio</strong>.
+              {t('about.statement')}
             </p>
           </div>
           <div style={{ display: 'flex', justifyContent: 'center', opacity: 0.55 }}>
@@ -441,6 +452,7 @@ function QuienesSomos() {
 // SECTION: Cómo lo hacemos
 // ─────────────────────────────────────────────
 function ComoLoHacemos() {
+  const { t, list } = useI18n()
   const [hov, setHov] = useState<number | null>(null)
   const caps = [
     { label: 'Optimización de procesos', icon: <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"><circle cx="12" cy="12" r="3" /><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5.6 5.6l1.4 1.4M16.9 16.9l1.5 1.5M5.6 18.4l1.4-1.4M16.9 7.1l1.5-1.5" /></svg> },
@@ -451,19 +463,15 @@ function ComoLoHacemos() {
     { label: 'Experiencia de usuario', icon: <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" /></svg> },
     { label: 'Funciones interactivas', icon: <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" /></svg> },
     { label: 'Investigación de nuevas tecnologías y metodologías', icon: <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"><circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" /></svg> },
-  ]
+  ].map((cap, index) => ({ ...cap, label: list('how.capabilities')[index] }))
   return (
     <div style={{ padding: '48px 40px', maxWidth: '1080px', margin: '0 auto' }}>
       <h2 style={{ fontWeight: 300, fontSize: '34px', color: C.white, margin: '0 0 28px' }}>
-        ¿Cómo lo <span style={{ color: C.pink, fontWeight: 700 }}>hacemos?</span>
+        {t('how.title1')} <span style={{ color: C.pink, fontWeight: 700 }}>{t('how.title2')}</span>
       </h2>
       <div style={{ background: 'rgba(228,229,242,0.04)', border: '1px solid rgba(228,229,242,0.09)', borderRadius: '16px', padding: '26px', marginBottom: '40px' }}>
         <p style={{ fontSize: '15px', lineHeight: 1.9, color: C.lavender, margin: 0 }}>
-          Desarrollamos <strong style={{ color: C.white }}>soluciones de software personalizadas</strong> mediante{' '}
-          <strong style={{ color: C.white }}>metodologías ágiles e innovación tecnológica</strong>. El trabajo integra{' '}
-          <strong style={{ color: C.white }}>talento y experiencia</strong> para construir desarrollos escalables, con calidad y adaptados a distintos entornos operativos.
-          El enfoque cercano y el uso de herramientas digitales permiten incorporar{' '}
-          <strong style={{ color: C.white }}>procesos eficientes y sostenibles</strong> a nivel nacional e internacional.
+          {t('how.description')}
         </p>
       </div>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '14px' }}>
@@ -485,21 +493,19 @@ function ComoLoHacemos() {
 // SECTION: Modelo de servicio
 // ─────────────────────────────────────────────
 function ModeloServicio() {
+  const { t } = useI18n()
   const [active, setActive] = useState<number | null>(null)
   const pillars = [
     {
-      title: 'Exploración de tecnologías emergentes',
-      desc: 'Investigamos y adoptamos tendencias tecnológicas para incorporar alternativas pertinentes en el desarrollo de soluciones.',
+      title: t('model.pillars.0.title'), desc: t('model.pillars.0.description'),
       icon: <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"><rect x="5" y="2" width="14" height="20" rx="2" /><line x1="12" y1="18" x2="12.01" y2="18" strokeWidth="2" /><path d="M9 7l2 2 4-4" /></svg>
     },
     {
-      title: 'Optimización de metodologías de desarrollo',
-      desc: 'Aplicamos marcos ágiles y buenas prácticas de ingeniería de software para integrar calidad, velocidad y eficiencia en cada proyecto.',
+      title: t('model.pillars.1.title'), desc: t('model.pillars.1.description'),
       icon: <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"><polyline points="16 18 22 12 16 6" /><polyline points="8 6 2 12 8 18" /></svg>
     },
     {
-      title: 'Innovación continua',
-      desc: 'Mantenemos una cultura de mejora permanente que incorpora nuevas ideas, herramientas y metodologías en la evolución de los desarrollos.',
+      title: t('model.pillars.2.title'), desc: t('model.pillars.2.description'),
       icon: <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"><path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10" /><path d="M13 2.05A10 10 0 0 1 22 12" /><path d="M18 15l4 4-4 4" /><line x1="22" y1="19" x2="14" y2="19" /></svg>
     },
   ]
@@ -512,10 +518,10 @@ function ModeloServicio() {
               <DragonMascot size={130} />
             </div>
             <h2 style={{ fontWeight: 300, fontSize: '28px', color: C.white, margin: '0 0 12px', lineHeight: 1.2 }}>
-              Modelo de <br /><span style={{ fontWeight: 700 }}>negocio</span>
+              {t('model.title1')} <br /><span style={{ fontWeight: 700 }}>{t('model.title2')}</span>
             </h2>
             <p style={{ fontSize: '14px', color: C.lavender, opacity: 0.65, margin: 0, lineHeight: 1.6 }}>
-              El modelo de servicio se estructura en tres pilares fundamentales.
+              {t('model.description')}
             </p>
           </div>
         </div>
@@ -556,6 +562,7 @@ function ModeloServicio() {
 // SECTION: Líneas de negocio
 // ─────────────────────────────────────────────
 function LineasNegocio() {
+  const { t, list } = useI18n()
   const [active, setActive] = useState<number | null>(null)
   const lines = [
     {
@@ -597,14 +604,14 @@ function LineasNegocio() {
       image: new URL('./imports/soporte.png', import.meta.url).href,
       accent: C.blue,
     },
-  ]
+  ].map((line, index) => ({ ...line, title: t(`business.lines.${index}.title`), items: list(`business.lines.${index}.items`) }))
   return (
     <div style={{ padding: '48px 40px', maxWidth: '1080px', margin: '0 auto' }}>
       <h2 style={{ fontWeight: 300, fontSize: '34px', color: C.white, margin: '0 0 8px' }}>
-        Líneas de <span style={{ color: C.pink, fontWeight: 700 }}>negocio</span>
+        {t('business.title1')} <span style={{ color: C.pink, fontWeight: 700 }}>{t('business.title2')}</span>
       </h2>
       <p style={{ fontSize: '13px', color: C.lavender, opacity: 0.5, marginBottom: '36px' }}>
-        Selecciona una línea para ver sus detalles
+        {t('common.selectLine')}
       </p>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))', gap: '14px' }}>
         {lines.map((line, i) => {
@@ -630,7 +637,7 @@ function LineasNegocio() {
                 </div>
               )}
               <div style={{ marginTop: '14px', fontSize: '11px', color: line.accent, opacity: open ? 0.8 : 0.4, fontWeight: 500, display: 'flex', alignItems: 'center', gap: '4px' }}>
-                {open ? 'Cerrar' : 'Ver detalles'}
+                {open ? t('common.close') : t('common.details')}
                 <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
                   <path d={open ? 'M6 9l6 6 6-6' : 'M9 18l6-6-6-6'} />
                 </svg>
@@ -647,6 +654,7 @@ function LineasNegocio() {
 // SECTION: Experiencia y alianzas
 // ─────────────────────────────────────────────
 function ExperienciaAlianzas() {
+  const { t, list } = useI18n()
   const [hovInd, setHovInd] = useState<number | null>(null)
   const industries = [
     { name: 'Seguros', icon: <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg> },
@@ -657,29 +665,28 @@ function ExperienciaAlianzas() {
     { name: 'Educación', icon: <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z" /><path d="M6 12v5c3 3 9 3 12 0v-5" /></svg> },
     { name: 'Retail', icon: <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" /><line x1="3" y1="6" x2="21" y2="6" /><path d="M16 10a4 4 0 0 1-8 0" /></svg> },
     { name: 'Servicios financieros', icon: <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"><line x1="12" y1="1" x2="12" y2="23" /><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" /></svg> },
-  ]
+  ].map((industry, index) => ({ ...industry, name: list('experience.industries')[index] }))
   return (
     <div style={{ padding: '48px 40px', maxWidth: '1080px', margin: '0 auto' }}>
       <h2 style={{ fontWeight: 300, fontSize: '34px', color: C.white, margin: '0 0 32px' }}>
-        Experiencia <span style={{ color: C.pink, fontWeight: 700 }}>y alianzas</span>
+        {t('experience.title1')} <span style={{ color: C.pink, fontWeight: 700 }}>{t('experience.title2')}</span>
       </h2>
       <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr', gap: '44px' }}>
         <div>
           <div style={{ background: 'rgba(42,62,244,0.07)', border: '1px solid rgba(42,62,244,0.16)', borderRadius: '16px', padding: '28px', marginBottom: '20px' }}>
             <p style={{ fontSize: '15px', lineHeight: 1.85, color: C.white, margin: 0 }}>
-              Desarrollamos soluciones con <strong style={{ color: C.white }}>tecnología</strong> para industrias como{' '}
-              <strong>seguros, agro, hidrocarburos, tecnología, salud, educación, retail y servicios financieros</strong>. Esta experiencia aporta conocimiento sobre las particularidades de cada sector.
+              {t('experience.description1')}
             </p>
           </div>
           <div style={{ background: 'rgba(255,255,255,0.04)', border: `1px solid ${C.border}`, borderRadius: '16px', padding: '28px' }}>
             <p style={{ fontSize: '14px', lineHeight: 1.8, color: C.lavender, margin: 0, opacity: 0.82 }}>
-              El enfoque combina cercanía, entendimiento del entorno y el uso de <strong style={{ color: C.white }}>herramientas digitales</strong> para desarrollar soluciones eficientes y sostenibles a nivel <strong style={{ color: C.white }}>nacional e internacional</strong>.
+              {t('experience.description2')}
             </p>
           </div>
         </div>
         <div>
           <div style={{ fontWeight: 600, fontSize: '13px', color: C.lavender, opacity: 0.55, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '16px' }}>
-            Industrias con experiencia
+            {t('experience.industriesTitle')}
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
             {industries.map((ind, i) => (
@@ -700,6 +707,7 @@ function ExperienciaAlianzas() {
 // SECTION: Clientes y alianzas
 // ─────────────────────────────────────────────
 function ClientesAlianzas() {
+  const { t } = useI18n()
   const [hov, setHov] = useState<string | null>(null)
   const clientes = [
     { name: 'Advance The Next Level', logo: new URL('./imports/Advance.png', import.meta.url).href },
@@ -730,12 +738,12 @@ function ClientesAlianzas() {
   return (
     <div style={{ padding: '48px 40px', maxWidth: '1080px', margin: '0 auto' }}>
       <h2 style={{ fontWeight: 300, fontSize: '34px', color: C.white, margin: '0 0 36px' }}>
-        Clientes <span style={{ color: C.pink, fontWeight: 700 }}>y alianzas</span>
+        {t('common.clients')} <span style={{ color: C.pink, fontWeight: 700 }}>{t('common.partnerships').toLowerCase()}</span>
       </h2>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))', gap: '36px' }}>
         <div>
           <div style={{ fontWeight: 600, fontSize: '12px', color: C.lavender, opacity: 0.5, letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: '14px' }}>
-            Clientes — {clientes.length} empresas
+            {t('common.clients')} — {clientes.length}
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(138px, 1fr))', gap: '10px' }}>
             {clientes.map((c, i) => <ClientCard key={i} name={c.name} logo={c.logo} id={`c-${i}`} />)}
@@ -743,17 +751,17 @@ function ClientesAlianzas() {
         </div>
         <div>
           <div style={{ fontWeight: 600, fontSize: '12px', color: C.lavender, opacity: 0.5, letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: '14px' }}>
-            Alianzas
+            {t('common.partnerships')}
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(138px, 1fr))', gap: '10px' }}>
             {alianzas.map((a, i) => <ClientCard key={i} name={a.name} logo={a.logo} id={`a-${i}`} />)}
           </div>
           <div style={{ marginTop: '32px', background: 'rgba(255,0,79,0.07)', border: `1px solid ${C.pinkBorder}`, borderRadius: '12px', padding: '20px' }}>
             <div style={{ fontWeight: 700, fontSize: '28px', color: C.pink, lineHeight: 1 }}>14</div>
-            <div style={{ fontSize: '12px', color: C.lavender, opacity: 0.65, marginTop: '4px' }}>Clientes activos</div>
+            <div style={{ fontSize: '12px', color: C.lavender, opacity: 0.65, marginTop: '4px' }}>{t('common.activeClients')}</div>
             <div style={{ width: '100%', height: '1px', background: 'rgba(255,0,79,0.15)', margin: '14px 0' }} />
             <div style={{ fontWeight: 700, fontSize: '28px', color: C.blue, lineHeight: 1 }}>2</div>
-            <div style={{ fontSize: '12px', color: C.lavender, opacity: 0.65, marginTop: '4px' }}>Alianzas estratégicas</div>
+            <div style={{ fontSize: '12px', color: C.lavender, opacity: 0.65, marginTop: '4px' }}>{t('common.strategicPartnerships')}</div>
           </div>
         </div>
       </div>
@@ -765,6 +773,7 @@ function ClientesAlianzas() {
 // SECTION: Gestión de proyectos
 // ─────────────────────────────────────────────
 function GestionProyectos() {
+  const { t, list } = useI18n()
   const [hov, setHov] = useState<number | null>(null)
   const benefits = [
     {
@@ -787,15 +796,15 @@ function GestionProyectos() {
       icon: <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"><rect x="3" y="3" width="18" height="18" rx="2" /><path d="M3 9h18M9 21V9" /></svg>,
       accent: C.pink,
     },
-  ]
+  ].map((benefit, index) => ({ ...benefit, title: list('projects.benefits')[index] }))
   return (
     <div style={{ padding: '48px 40px', maxWidth: '1080px', margin: '0 auto' }}>
       <h2 style={{ fontWeight: 300, fontSize: '34px', color: C.white, margin: '0 0 10px' }}>
-        Capacidades de una <br />
-        <span style={{ color: C.pink, fontWeight: 700 }}>Gestión de Proyectos Efectiva</span>
+        {t('projects.title1')} <br />
+        <span style={{ color: C.pink, fontWeight: 700 }}>{t('projects.title2')}</span>
       </h2>
       <p style={{ fontSize: '14px', color: C.lavender, opacity: 0.65, marginBottom: '36px', lineHeight: 1.7, maxWidth: '680px' }}>
-        La gestión de proyectos, respaldada por gestores capacitados, incorpora capacidades clave en el desarrollo de soluciones tecnológicas:
+        {t('projects.description')}
       </p>
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
         {benefits.map((b, i) => {
@@ -821,6 +830,7 @@ function GestionProyectos() {
 // SECTION: Tecnologías y herramientas
 // ─────────────────────────────────────────────
 function TecnologiasHerramientas() {
+  const { t, list } = useI18n()
   const [hovTech, setHovTech] = useState<string | null>(null)
   const [activeGroup, setActiveGroup] = useState<string | null>(null)
 
@@ -866,25 +876,26 @@ function TecnologiasHerramientas() {
     },
   ]
 
-  const allTechs = groups.flatMap(g => g.techs)
-  const displayGroups = activeGroup ? groups.filter(g => g.name === activeGroup) : groups
+  const translatedGroups = groups.map((group, index) => ({ ...group, name: list('technology.groups')[index] }))
+  const allTechs = translatedGroups.flatMap(g => g.techs)
+  const displayGroups = activeGroup ? translatedGroups.filter(g => g.name === activeGroup) : translatedGroups
 
   return (
     <div style={{ padding: '48px 40px', maxWidth: '1080px', margin: '0 auto' }}>
       <h2 style={{ fontWeight: 300, fontSize: '34px', color: C.white, margin: '0 0 10px' }}>
-        Tecnologías <span style={{ color: C.pink, fontWeight: 700 }}>y herramientas</span>
+        {t('technology.title1')} <span style={{ color: C.pink, fontWeight: 700 }}>{t('technology.title2')}</span>
       </h2>
       <p style={{ fontSize: '14px', color: C.lavender, opacity: 0.65, marginBottom: '12px', lineHeight: 1.7, maxWidth: '720px' }}>
-        El portafolio de <strong style={{ color: C.white }}>herramientas y plataformas</strong> permite integrar tecnologías para el desarrollo de soluciones. Su uso incorpora <strong style={{ color: C.white }}>innovación y agilidad</strong> como capacidades del proceso tecnológico.
+        {t('technology.description')}
       </p>
 
       {/* Filter chips */}
       <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginBottom: '28px' }}>
         <button onClick={() => setActiveGroup(null)}
           style={{ fontWeight: 600, fontSize: '12px', color: activeGroup === null ? C.navy : C.lavender, background: activeGroup === null ? C.blue : 'rgba(255,255,255,0.06)', border: `1px solid ${activeGroup === null ? C.blue : C.border}`, borderRadius: '20px', padding: '6px 14px', cursor: 'pointer', transition: 'all 0.2s' }}>
-          Todas — {allTechs.length}
+          {t('common.all')} — {allTechs.length}
         </button>
-        {groups.map(g => (
+        {translatedGroups.map(g => (
           <button key={g.name} onClick={() => setActiveGroup(activeGroup === g.name ? null : g.name)}
             style={{ fontWeight: 500, fontSize: '12px', color: activeGroup === g.name ? C.navy : C.lavender, background: activeGroup === g.name ? C.pink : 'rgba(255,255,255,0.06)', border: `1px solid ${activeGroup === g.name ? C.pink : C.border}`, borderRadius: '20px', padding: '6px 14px', cursor: 'pointer', transition: 'all 0.2s' }}>
             {g.name}
@@ -927,12 +938,13 @@ function TecnologiasHerramientas() {
 // SECTION: Contacto
 // ─────────────────────────────────────────────
 function Contacto() {
+  const { t } = useI18n()
   const [hovContact, setHovContact] = useState<number | null>(null)
   const items = [
-    { icon: <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"><rect x="5" y="2" width="14" height="20" rx="2" /><line x1="12" y1="18" x2="12.01" y2="18" strokeWidth="2.5" /></svg>, label: 'Teléfono', value: '(+57) 311 885 2679' },
-    { icon: <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" /><polyline points="22,6 12,13 2,6" /></svg>, label: 'Email', value: 'contacto@drakiontech.com' },
-    { icon: <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" /></svg>, label: 'Ubicación', value: 'Ibagué-Tolima, Colombia' },
-    { icon: <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"><circle cx="12" cy="12" r="10" /><path d="M12 2a14.5 14.5 0 0 0 0 20" /><path d="M2 12h20" /></svg>, label: 'Sitio web', value: 'www.drakiontech.com' },
+    { icon: <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"><rect x="5" y="2" width="14" height="20" rx="2" /><line x1="12" y1="18" x2="12.01" y2="18" strokeWidth="2.5" /></svg>, label: t('contact.phone'), value: '(+57) 311 885 2679' },
+    { icon: <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" /><polyline points="22,6 12,13 2,6" /></svg>, label: t('contact.email'), value: 'contacto@drakiontech.com' },
+    { icon: <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" /></svg>, label: t('contact.location'), value: t('contact.locationValue') },
+    { icon: <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"><circle cx="12" cy="12" r="10" /><path d="M12 2a14.5 14.5 0 0 0 0 20" /><path d="M2 12h20" /></svg>, label: t('contact.website'), value: 'www.drakiontech.com' },
   ]
   const contactLinks = [
     'https://api.whatsapp.com/send/?phone=573118852679&text=Hola%2C+me+gustar%C3%ADa+obtener+m%C3%A1s+informaci%C3%B3n+sobre+sus+servicios&type=phone_number&app_absent=0',
@@ -945,10 +957,10 @@ function Contacto() {
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '40px', alignItems: 'center' }}>
         <div>
           <h2 style={{ fontWeight: 300, fontSize: '34px', color: C.white, margin: '0 0 10px' }}>
-            Conectemos
+            {t('contact.title')}
           </h2>
           <p style={{ fontSize: '15px', color: C.lavender, opacity: 0.65, marginBottom: '36px', lineHeight: 1.75 }}>
-            Estamos disponibles para conversar sobre <strong style={{ color: C.white }}>iniciativas tecnológicas</strong> y necesidades de desarrollo.
+            {t('contact.description')}
           </p>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
             {items.map((item, i) => {
@@ -998,6 +1010,7 @@ export default function App() {
   return (
     <div style={{ minHeight: '100vh', background: C.navy, color: C.white, position: 'relative' }}>
       <BgDecor />
+      <LanguageSelector />
 
       {screen === 'cover' && (
         <CoverScreen onExplore={() => setScreen('menu')} />
