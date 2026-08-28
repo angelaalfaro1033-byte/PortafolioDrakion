@@ -69,7 +69,7 @@ function LanguageSelector() {
   const { language, setLanguage, t } = useI18n()
   const flags = { es: '🇨🇴', en: '🇺🇸' } as const
   return (
-    <div aria-label={t('language.label')} style={{ position: 'fixed', top: '18px', right: '24px', zIndex: 40, display: 'flex', alignItems: 'center', padding: '4px', border: `1px solid ${C.border}`, borderRadius: '9px', background: 'rgba(7,25,71,0.82)', backdropFilter: 'blur(12px)' }}>
+    <div aria-label={t('language.label')} style={{ display: 'flex', alignItems: 'center', padding: '4px', border: `1px solid ${C.border}`, borderRadius: '9px', background: 'rgba(7,25,71,0.82)', backdropFilter: 'blur(12px)', flexShrink: 0 }}>
       {(['es', 'en'] as const).map((option, index) => (
         <React.Fragment key={option}>
           {index > 0 && <span aria-hidden="true" style={{ width: '1px', height: '17px', background: 'rgba(228,229,242,0.2)', margin: '0 2px' }} />}
@@ -162,12 +162,15 @@ function BackBtn({ onClick }: { onClick: () => void }) {
 function SectionBar({ id, onBack }: { id: SectionId; onBack: () => void }) {
   const { t } = useI18n()
   return (
-    <div style={{ position: 'sticky', top: 0, zIndex: 20, background: 'rgba(7,25,71,0.94)', backdropFilter: 'blur(14px)', borderBottom: '1px solid rgba(255,255,255,0.08)', padding: '14px 32px', display: 'flex', alignItems: 'center', gap: '16px' }}>
+    <div style={{ position: 'sticky', top: 0, zIndex: 20, background: 'rgba(7,25,71,0.94)', backdropFilter: 'blur(14px)', borderBottom: '1px solid rgba(255,255,255,0.08)', padding: '14px 32px', display: 'flex', alignItems: 'center', gap: '16px', flexWrap: 'wrap' }}>
       <BackBtn onClick={onBack} />
       <div style={{ width: '1px', height: '22px', background: 'rgba(255,255,255,0.1)' }} />
       <div style={{ color: C.white }}><SectionIcon id={id} size={20} /></div>
       <span style={{ fontWeight: 600, fontSize: '16px', color: C.white }}>{t(`navigation.${id}`)}</span>
-      <div style={{ marginLeft: 'auto' }}><DrakionLogo scale={0.82} /></div>
+      <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: '18px' }}>
+        <LanguageSelector />
+        <DrakionLogo scale={0.82} />
+      </div>
     </div>
   )
 }
@@ -180,6 +183,9 @@ function CoverScreen({ onExplore }: { onExplore: () => void }) {
   const [btnH, setBtnH] = useState(false)
   return (
     <div style={{ position: 'relative', minHeight: '100vh', zIndex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '80px 48px 60px' }}>
+      <div style={{ position: 'absolute', top: 18, right: 24 }}>
+        <LanguageSelector />
+      </div>
       {/* Chevrons top-right */}
       <div style={{ position: 'absolute', top: 20, right: 108, display: 'flex', gap: '3px', opacity: 0.16 }}>
         {[0, 1, 2, 3].map(i => (
@@ -286,6 +292,9 @@ function MenuScreen({ onSelect }: { onSelect: (id: SectionId) => void }) {
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '80px 24px 40px', position: 'relative', zIndex: 1 }}>
       <div style={{ position: 'absolute', top: 20, left: 26 }}>
         <DrakionLogo scale={0.88} />
+      </div>
+      <div style={{ position: 'absolute', top: 18, right: 24 }}>
+        <LanguageSelector />
       </div>
 
       <div style={{ textAlign: 'center', marginBottom: '32px' }}>
@@ -731,6 +740,7 @@ function ClientesAlianzas() {
   const alianzas = [
     { name: 'Cámara de Comercio de Ibagué', logo: new URL('./imports/CamaraComercio.png', import.meta.url).href },
     { name: 'Universidad de Ibagué', logo: new URL('./imports/UniversidadIbague.png', import.meta.url).href },
+    { name: 'Excelsior', logo: new URL('./imports/excelsior.png', import.meta.url).href },
   ]
   const ClientCard = ({ name, logo, id }: { name: string; logo: string; id: string }) => (
     <div onMouseEnter={() => setHov(id)} onMouseLeave={() => setHov(null)}
@@ -763,7 +773,7 @@ function ClientesAlianzas() {
             <div style={{ fontWeight: 700, fontSize: '28px', color: C.pink, lineHeight: 1 }}>14</div>
             <div style={{ fontSize: '13px', color: C.secondary, opacity: 1, marginTop: '4px' }}>{t('common.activeClients')}</div>
             <div style={{ width: '100%', height: '1px', background: 'rgba(255,0,79,0.15)', margin: '14px 0' }} />
-            <div style={{ fontWeight: 700, fontSize: '28px', color: C.white, lineHeight: 1 }}>2</div>
+            <div style={{ fontWeight: 700, fontSize: '28px', color: C.white, lineHeight: 1 }}>3</div>
             <div style={{ fontSize: '13px', color: C.secondary, opacity: 1, marginTop: '4px' }}>{t('common.strategicPartnerships')}</div>
           </div>
         </div>
@@ -1013,7 +1023,6 @@ export default function App() {
   return (
     <div style={{ minHeight: '100vh', background: C.navy, color: C.white, position: 'relative' }}>
       <BgDecor />
-      <LanguageSelector />
 
       {screen === 'cover' && (
         <CoverScreen onExplore={() => setScreen('menu')} />
