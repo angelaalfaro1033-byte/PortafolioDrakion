@@ -573,6 +573,42 @@ function ModeloServicio() {
 // ─────────────────────────────────────────────
 // SECTION: Líneas de negocio
 // ─────────────────────────────────────────────
+function DrakionTapFeature() {
+  const { t } = useI18n()
+  const steps = [
+    { label: t('tap.steps.0'), icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="6" width="18" height="12" rx="2" /><path d="M7 10h5M7 14h8" /></svg> },
+    { label: t('tap.steps.1'), icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"><rect x="7" y="2" width="10" height="20" rx="2" /><path d="M4 9c1.7-1.7 3-2.5 4-2.5M4 15c1.7 1.7 3 2.5 4 2.5" /></svg> },
+    { label: t('tap.steps.2'), icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="9" /><path d="M8 12h8M12 8v8" /></svg> },
+  ]
+
+  return (
+    <aside aria-label="Drakion Tap" style={{ marginTop: '30px', marginBottom: '30px', background: 'rgba(42,62,244,0.07)', border: `1px solid ${C.blueBorder}`, borderRadius: '16px', padding: '24px 26px', overflow: 'hidden', position: 'relative' }}>
+      <div style={{ position: 'absolute', width: '170px', height: '170px', borderRadius: '50%', background: 'rgba(255,0,79,0.06)', right: '-70px', top: '-75px', pointerEvents: 'none' }} />
+      <div style={{ position: 'relative', display: 'flex', gap: '28px', alignItems: 'center', flexWrap: 'wrap' }}>
+        <div style={{ flex: '1 1 420px', minWidth: 'min(100%, 280px)' }}>
+          <div style={{ color: C.pink, fontSize: '11px', fontWeight: 700, letterSpacing: '0.16em', textTransform: 'uppercase', marginBottom: '8px' }}>{t('tap.eyebrow')}</div>
+          <h3 style={{ color: C.white, fontWeight: 700, fontSize: '23px', lineHeight: 1.2, margin: '0 0 8px' }}>{t('tap.title')}</h3>
+          <p style={{ color: C.secondary, fontSize: '14px', lineHeight: 1.65, margin: 0, maxWidth: '570px' }}>{t('tap.description')}</p>
+        </div>
+
+        <div style={{ flex: '1 1 330px', minWidth: 'min(100%, 280px)', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px' }}>
+          {steps.map((step, index) => (
+            <React.Fragment key={step.label}>
+              <div style={{ minWidth: 0, flex: 1, maxWidth: '112px', textAlign: 'center' }}>
+                <div style={{ width: '42px', height: '42px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', color: index === 1 ? C.pink : C.blue, background: index === 1 ? C.pinkGlass : C.blueGlass, border: `1px solid ${index === 1 ? C.pinkBorder : C.blueBorder}`, borderRadius: '11px', marginBottom: '8px' }}>{step.icon}</div>
+                <div style={{ color: C.secondary, fontSize: '11px', lineHeight: 1.35 }}>{step.label}</div>
+              </div>
+              {index < steps.length - 1 && (
+                <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={C.lavender} strokeWidth="1.8" strokeLinecap="round" style={{ flexShrink: 0, opacity: 0.55 }}><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+              )}
+            </React.Fragment>
+          ))}
+        </div>
+      </div>
+    </aside>
+  )
+}
+
 function LineasNegocio() {
   const { t, list } = useI18n()
   const [active, setActive] = useState<number | null>(null)
@@ -625,6 +661,7 @@ function LineasNegocio() {
       <p style={{ fontSize: '15px', color: C.tertiary, opacity: 1, marginBottom: '36px' }}>
         {t('common.selectLine')}
       </p>
+      <DrakionTapFeature />
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))', gap: '14px' }}>
         {lines.map((line, i) => {
           const open = active === i
