@@ -365,7 +365,7 @@ function MenuScreen({ onSelect }: { onSelect: (id: SectionId) => void }) {
 // ─────────────────────────────────────────────
 // SECTION PANEL WRAPPER
 // ─────────────────────────────────────────────
-function SectionPanel({ id, onBack }: { id: SectionId; onBack: () => void }) {
+function SectionPanel({ id, onBack, onNavigate }: { id: SectionId; onBack: () => void; onNavigate: (id: SectionId) => void }) {
   const ContentMap: Record<SectionId, () => React.ReactElement> = {
     quienes: QuienesSomos, como: ComoLoHacemos, modelo: ModeloServicio,
     lineas: LineasNegocio, experiencia: ExperienciaAlianzas, clientes: ClientesAlianzas,
@@ -379,7 +379,32 @@ function SectionPanel({ id, onBack }: { id: SectionId; onBack: () => void }) {
       <div style={{ position: 'relative', zIndex: 1 }}>
         <Content />
       </div>
+      <SectionArrows id={id} onNavigate={onNavigate} />
     </div>
+  )
+}
+
+const SECTION_ORDER: SectionId[] = [...MENU.map(item => item.id), 'contacto']
+
+function SectionArrows({ id, onNavigate }: { id: SectionId; onNavigate: (id: SectionId) => void }) {
+  const index = SECTION_ORDER.indexOf(id)
+  const previous = SECTION_ORDER[(index - 1 + SECTION_ORDER.length) % SECTION_ORDER.length]
+  const next = SECTION_ORDER[(index + 1) % SECTION_ORDER.length]
+  const buttonStyle: React.CSSProperties = {
+    width: 44, height: 44, display: 'flex', alignItems: 'center', justifyContent: 'center',
+    border: `1px solid ${C.border}`, borderRadius: '50%', color: C.lavender,
+    background: 'rgba(7,25,71,0.82)', backdropFilter: 'blur(10px)', cursor: 'pointer',
+    transition: 'all 0.2s',
+  }
+  return (
+    <>
+      <button className="section-arrow section-arrow-left" type="button" aria-label="Sección anterior" title="Sección anterior" onClick={() => onNavigate(previous)} style={buttonStyle}>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 12H5M12 19l-7-7 7-7" /></svg>
+      </button>
+      <button className="section-arrow section-arrow-right" type="button" aria-label="Siguiente sección" title="Siguiente sección" onClick={() => onNavigate(next)} style={buttonStyle}>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14m-7-7 7 7-7 7" /></svg>
+      </button>
+    </>
   )
 }
 
@@ -436,7 +461,11 @@ function QuienesSomos() {
                   </div>
                   {open && (
                     <div style={{ marginTop: '14px', paddingTop: '14px', borderTop: '1px solid rgba(42,62,244,0.2)', fontSize: '16px', color: C.secondary, lineHeight: 1.75, animation: 'fadeInUp 0.3s ease' }}>
-                      {card.content}
+                      {card.content.split(/(\*\*.*?\*\*)/g).map((part, index) =>
+                        part.startsWith('**') && part.endsWith('**')
+                          ? <strong key={index} style={{ color: C.white, fontWeight: 700 }}>{part.slice(2, -2)}</strong>
+                          : part
+                      )}
                     </div>
                   )}
                 </button>
@@ -1070,7 +1099,7 @@ export default function App() {
       )}
 
       {section && (
-        <SectionPanel id={section} onBack={() => setSection(null)} />
+        <SectionPanel key={section} id={section} onBack={() => setSection(null)} onNavigate={setSection} />
       )}
     </div>
   )

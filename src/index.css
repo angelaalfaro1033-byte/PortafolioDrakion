@@ -47,3 +47,15 @@ body {
 .anim-float { animation: floatY 5.5s ease-in-out infinite; }
 .anim-eye { animation: eyeGlow 3s ease-in-out infinite; }
 .anim-panel { animation: panelIn 0.42s cubic-bezier(0.22,1,0.36,1) forwards; }
+
+.anim-panel .section-arrow { position: fixed; z-index: 25; top: 50%; transform: translateY(-50%); opacity: 0.72; }
+.anim-panel .section-arrow:hover,
+.anim-panel .section-arrow:focus-visible { color: #ffffff; border-color: rgba(255,0,79,0.45); background: rgba(255,0,79,0.14); opacity: 1; outline: none; }
+.anim-panel .section-arrow-left { left: 18px; }
+.anim-panel .section-arrow-right { right: 18px; }
+
+@media (max-width: 640px) {
+  .anim-panel .section-arrow { top: auto; bottom: max(18px, env(safe-area-inset-bottom)); transform: none; opacity: 0.9; }
+  .anim-panel .section-arrow-left { left: 22px; }
+  .anim-panel .section-arrow-right { right: 22px; }
+}
