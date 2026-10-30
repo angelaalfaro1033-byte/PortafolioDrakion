@@ -807,6 +807,7 @@ function ClientesAlianzas() {
     { name: 'Cámara de Comercio de Ibagué', logo: new URL('./imports/CamaraComercio.png', import.meta.url).href },
     { name: 'Universidad de Ibagué', logo: new URL('./imports/UniversidadIbague.png', import.meta.url).href },
     { name: 'Excelsior', logo: new URL('./imports/excelsior.png', import.meta.url).href },
+    { name: 'Exfil', logo: new URL('./imports/exfil.png', import.meta.url).href },
   ]
   const ClientCard = ({ name, logo, id }: { name: string; logo: string; id: string }) => (
     <div onMouseEnter={() => setHov(id)} onMouseLeave={() => setHov(null)}
@@ -839,7 +840,7 @@ function ClientesAlianzas() {
             <div style={{ fontWeight: 700, fontSize: '28px', color: C.pink, lineHeight: 1 }}>14</div>
             <div style={{ fontSize: '13px', color: C.secondary, opacity: 1, marginTop: '4px' }}>{t('common.activeClients')}</div>
             <div style={{ width: '100%', height: '1px', background: 'rgba(255,0,79,0.15)', margin: '14px 0' }} />
-            <div style={{ fontWeight: 700, fontSize: '28px', color: C.white, lineHeight: 1 }}>3</div>
+            <div style={{ fontWeight: 700, fontSize: '28px', color: C.white, lineHeight: 1 }}>{alianzas.length}</div>
             <div style={{ fontSize: '13px', color: C.secondary, opacity: 1, marginTop: '4px' }}>{t('common.strategicPartnerships')}</div>
           </div>
         </div>
