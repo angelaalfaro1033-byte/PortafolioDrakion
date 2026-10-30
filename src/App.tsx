@@ -812,7 +812,7 @@ function ClientesAlianzas() {
   const ClientCard = ({ name, logo, id }: { name: string; logo: string; id: string }) => (
     <div onMouseEnter={() => setHov(id)} onMouseLeave={() => setHov(null)}
       style={{ background: hov === id ? C.blueGlass : 'rgba(255,255,255,0.05)', border: `1px solid ${hov === id ? C.blueBorder : C.border}`, borderRadius: '10px', padding: '18px', minHeight: '130px', transition: 'transform 0.2s, background 0.2s, border-color 0.2s, box-shadow 0.2s', transform: hov === id ? 'scale(1.025)' : 'scale(1)', boxShadow: hov === id ? `0 8px 24px ${C.blueGlass}` : 'none', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-      <img src={logo} alt={name} style={{ width: '100%', height: '92px', objectFit: 'contain', display: 'block' }} />
+      <img src={logo} alt={name} style={{ width: '100%', height: '92px', objectFit: 'contain', display: 'block', transform: name === 'Exfil' ? 'scale(1.16)' : undefined }} />
     </div>
   )
   return (
